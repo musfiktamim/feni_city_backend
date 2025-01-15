@@ -1,5 +1,5 @@
 import dotenv from "dotenv"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import UserModel from "../model/User.Model.js"
 import jwt from "jsonwebtoken"
 import { cloudNaryGetUrl } from "../module/cloudnaris.js"
