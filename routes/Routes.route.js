@@ -3,6 +3,7 @@ import authentication from "../middleware/authentication.middleware.js";
 import DoctorController from "../controller/doctor.controller.js";
 import User from "../controller/user.controller.js";
 import BloodController from "../controller/blood.controller.js";
+import CarRentController from "../controller/carrent.controller.js";
 
 const router = express.Router();
 
@@ -23,6 +24,10 @@ router.get("/blood-get-all", BloodController.getAll)
 router.post("/blood-create", authentication, BloodController.createBlood)
 router.get("/get-blood-chunk", BloodController.getChunk);
 router.get("/get-blood-byId", BloodController.getElementById);
+
+// car rent
+router.post('/create-car-rent',authentication,CarRentController.createCarRent)
+router.get("/get-car-rent",CarRentController.getCarRent)
 
 
 

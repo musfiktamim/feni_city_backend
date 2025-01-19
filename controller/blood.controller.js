@@ -10,7 +10,7 @@ class BloodController {
                 let imageUrls = {
                     url: "",
                     secure_url: "",
-                    piblic_id: ""
+                    public_id: ""
                 }
                 if (donner_name && contact && height && Weight && blood_group) {
                     console.log("valid")
@@ -26,7 +26,7 @@ class BloodController {
                     const savedData = await BloodModel({
                         userId: req.user.id,
                         donner_name: donner_name,
-                        picture: { url: imageUrls.url, secure_url: imageUrls.secure_url, public_id: imageUrls.piblic_id },
+                        picture: { url: imageUrls.url, secure_url: imageUrls.secure_url, public_id: imageUrls.public_id },
                         contact: contact,
                         date_of_birth: date_of_birth,
                         height: height,
@@ -64,13 +64,25 @@ class BloodController {
 
     static getChunk = async (req, res) => {
         try {
-            const skipmulty = 0;
+            console.log(req.query)
+            const {page,blood_group} = req.query
+            const changes = blood_group.replace(" ","+")
             const limits = 10;
-            const bloodData = await BloodModel.find().limit(limits).skip(skipmulty * limits)
-            return res.send({ mission: true, data: bloodData })
+            console.log(changes)
+            let bloodData;
+            if(changes!=`All`){
+                bloodData = await BloodModel.find({blood_group:changes}).skip(page * limits).limit(limits)
+            }else{
+                bloodData = await BloodModel.find().skip(page * limits).limit(limits)
+            }
+            return res.send(bloodData)
         } catch (err) {
             return res.send({ mission: false, message: err.message })
         }
+    }
+
+    static bloodgroupParamsget = async (req,res)=>{
+        console.log(req)
     }
 
     static getElementById = async (req, res) => {

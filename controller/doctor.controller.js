@@ -5,10 +5,15 @@ class DoctorController {
 
     static DoctorGet = async (req, res) => {
         try {
-            const skipmulty = 0;
+            const {doctor_type,page} = req.query;
             const limits = 10;
-            const Doctors = await DoctorModel.find().limit(limits).skip(skipmulty * limits)
-            return res.send({ mission: true, data: Doctors })
+            let Doctors;
+            if(doctor_type==`All`){
+                Doctors = await DoctorModel.find().skip(page * limits).limit(limits)
+            }else{
+                Doctors = await DoctorModel.find({doctor_type:doctor_type}).skip(page * limits).limit(limits)
+            }
+            return res.send(Doctors)
         } catch (err) {
             return res.send({ mission: false, message: err.message })
         }
@@ -28,7 +33,7 @@ class DoctorController {
                                     picture: {
                                         url: url,
                                         secure_url: secure_url,
-                                        piblic_id: public_id,
+                                        public_id: public_id,
                                     },
                                     name: name,
                                     gender: gender,
