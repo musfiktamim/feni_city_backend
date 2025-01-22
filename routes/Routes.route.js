@@ -4,6 +4,10 @@ import DoctorController from "../controller/doctor.controller.js";
 import User from "../controller/user.controller.js";
 import BloodController from "../controller/blood.controller.js";
 import CarRentController from "../controller/carrent.controller.js";
+import toletController from "../controller/tolet.controller.js";
+import TourismController from "../controller/tourism.controller.js";
+import WorkerController from "../controller/worker.controller.js";
+import NewsController from "../controller/news.controller.js";
 
 const router = express.Router();
 
@@ -29,6 +33,22 @@ router.get("/get-blood-byId", BloodController.getElementById);
 router.post('/create-car-rent',authentication,CarRentController.createCarRent)
 router.get("/get-car-rent",CarRentController.getCarRent)
 
+// tolet
+
+router.post("/tolet-create",authentication,toletController.createToLet);
+router.get("/get-tolet",toletController.getTolete)
+
+
+// tourism
+router.post("/create-tourism",authentication,TourismController.createTourism)
+router.get("/get-tourism",TourismController.getTourism)
+
+//worker
+router.post("/create-worker",authentication,WorkerController.createWorker)
+router.get("/get-worker",WorkerController.getWorker)
+
+// news
+router.post("/create-news",authentication,NewsController.createNews)
 
 
 export default router

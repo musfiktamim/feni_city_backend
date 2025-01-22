@@ -18,11 +18,12 @@ async function cloudNaryGetUrl(getUrl) {
     }
 }
 
-async function cloudNaryPostMediaOnePost(data) {
+async function cloudNaryPostMediaOnePost(data,foldername="") {
     try {
         const res = await cloudinary.uploader.upload(`data:image/jpg;base64,${data}`, {
             public_id: nanoid(),
-            resource_type: "image"
+            resource_type: "image",
+            folder:foldername
         })
         return res;
     } catch (error) {
@@ -30,4 +31,17 @@ async function cloudNaryPostMediaOnePost(data) {
     }
 }
 
-export { cloudNaryGetUrl, cloudNaryPostMediaOnePost }
+async function cloudNaryPostMediaMultyPost(images) {
+    try{
+        let imageReturn = []
+        images.map(async (item)=>{
+            const {public_id, secure_url, url} = await cloudNaryPostMediaOnePost(item)
+            imageReturn.push({public_id, secure_url, url})
+        })
+        return imageReturn
+    } catch (error) {
+        return { message: error.message }
+    }
+}
+
+export { cloudNaryGetUrl, cloudNaryPostMediaOnePost,cloudNaryPostMediaMultyPost }

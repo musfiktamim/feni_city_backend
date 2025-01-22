@@ -16,10 +16,15 @@ const NewsSchema = mongoose.Schema({
         type: String,
         required:true,
     },
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
+    },
     othersData: {
         type: Array
     }
-})
+}, { timestamps: true })
 
 const NewsModel = mongoose.model("News", NewsSchema);
 export default NewsModel;

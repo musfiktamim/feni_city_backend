@@ -22,7 +22,7 @@ const ToletSchema = mongoose.Schema({
         type:String,
         required:[true,"must be room_height is required"]
     },
-    room_weight:{
+    room_width:{
         type:String,
         required:[true,"must be room_weight is required"]
     },
@@ -60,6 +60,11 @@ const ToletSchema = mongoose.Schema({
     description:{
         type:String,
     },
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
+    },
     price:{
         monthly:{
             type:Number
@@ -67,9 +72,8 @@ const ToletSchema = mongoose.Schema({
         daily:{
             type:Number
         },
-        required:[true,"price must be required"]
     }
-});
+}, { timestamps: true });
 
 const ToletModel = mongoose.model("Tolet",ToletSchema);
 export default ToletModel;

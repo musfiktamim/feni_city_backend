@@ -12,7 +12,7 @@ const TourismSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    Location: {
+    location: {
         type: String,
         required:true,
     },
@@ -23,13 +23,15 @@ const TourismSchema = mongoose.Schema({
     description: {
         type:String,
     },
-    contacts: {
-        type:Array
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
     },
     othersData: {
         type: Array
     }
-})
+}, { timestamps: true })
 
 const TourismModel = mongoose.model("Tourism", TourismSchema)
 export default TourismModel;

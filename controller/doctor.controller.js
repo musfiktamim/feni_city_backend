@@ -26,15 +26,11 @@ class DoctorController {
                 if (name && doctorType && educations && contact && gender) {
                     try {
                         if (image) {
-                            const { public_id, secure_url, url } = await cloudNaryPostMediaOnePost(image)
-                            if (public_id && secure_url && url) {
+                            const imageLink = await cloudNaryPostMediaOnePost(image,'doctor')
+                            if (imageLink) {
                                 const savedDoctor = await DoctorModel({
                                     userId: req.user._id,
-                                    picture: {
-                                        url: url,
-                                        secure_url: secure_url,
-                                        public_id: public_id,
-                                    },
+                                    picture:imageLink,
                                     name: name,
                                     gender: gender,
                                     doctor_type: doctorType,

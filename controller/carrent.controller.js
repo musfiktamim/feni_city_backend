@@ -9,16 +9,12 @@ class CarRentController{
             if(name && contact && IsAc && carCode && image && nidNo && sits){
                 // nid cheacker
 
-                const { public_id, secure_url, url } = await cloudNaryPostMediaOnePost(image)
+                const imageLink = await cloudNaryPostMediaOnePost(image,'car_rent')
                 
                 const stuctureData = await RentCarModel({
                     userId:req.user.id,
                     name:name,
-                    picture:{
-                        public_id:public_id,
-                        secure_url:secure_url,
-                        url:url
-                    },
+                    picture:imageLink,
                     contact:contact,
                     car_code:carCode,
                     IsAc:IsAc,

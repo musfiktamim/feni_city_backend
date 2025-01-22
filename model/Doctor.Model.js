@@ -6,9 +6,8 @@ const DoctorSchema = mongoose.Schema({
         required: true,
     },
     picture: {
-        url: String,
-        secure_url: String,
-        public_id: String
+        type:Object,
+        required:[true,"picture must be required"]
     },
     name: {
         type: String,
@@ -41,12 +40,16 @@ const DoctorSchema = mongoose.Schema({
         type: String,
         required: [true, "contact must be required"]
     },
-
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
+    },
     othersData: {
         type: Array
     }
 
-})
+}, { timestamps: true })
 
 const DoctorModel = mongoose.model("Doctor", DoctorSchema)
 

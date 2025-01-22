@@ -6,41 +6,31 @@ class BloodController {
         try {
             if (req.user) {
                 const { image, donner_name, contact, date_of_birth, height, Weight, blood_group, hemoglobin, last, description, doned, remark, othersData } = req.body;
-
-                let imageUrls = {
-                    url: "",
-                    secure_url: "",
-                    public_id: ""
-                }
                 if (donner_name && contact && height && Weight && blood_group) {
                     console.log("valid")
                     if (image) {
-                        const { public_id, secure_url, url } = await cloudNaryPostMediaOnePost(image)
-                        if (public_id && secure_url && url) {
-                            imageUrls = { url: url, secure_url: secure_url, public_id: public_id };
-                        }
+                        const imageLink = await cloudNaryPostMediaOnePost(image,'blood')
+                        const savedData = await BloodModel({
+                            userId: req.user.id,
+                            donner_name: donner_name,
+                            picture: imageLink,
+                            contact: contact,
+                            date_of_birth: date_of_birth,
+                            height: height,
+                            Weight: Weight,
+                            blood_group: blood_group,
+                            hemoglobin: hemoglobin,
+                            last: last,
+                            doned: doned,
+                            description: description,
+                            remark: remark,
+                            othersData: othersData
+                        })
+                        const returnedData = await savedData.save();
+                        return res.send({ mission: true, message: `blood donner added successfully! thanks for donation sir ${returnedData.donner_name}` })
+                    }else{
+                        return res.send({ mission: false, message: "image links" })
                     }
-
-
-
-                    const savedData = await BloodModel({
-                        userId: req.user.id,
-                        donner_name: donner_name,
-                        picture: { url: imageUrls.url, secure_url: imageUrls.secure_url, public_id: imageUrls.public_id },
-                        contact: contact,
-                        date_of_birth: date_of_birth,
-                        height: height,
-                        Weight: Weight,
-                        blood_group: blood_group,
-                        hemoglobin: hemoglobin,
-                        last: last,
-                        doned: doned,
-                        description: description,
-                        remark: remark,
-                        othersData: othersData
-                    })
-                    const returnedData = await savedData.save();
-                    return res.send({ mission: true, message: `blood donner added successfully! thanks for donation sir ${returnedData.donner_name}` })
                 } else {
                     return res.send({ mission: false, message: "please field required fields" })
                 }
@@ -48,6 +38,7 @@ class BloodController {
                 return res.send({ mission: false, message: "user not found" })
             }
         } catch (err) {
+            console.log(err)
             return res.send({ mission: false, message: err.message })
         }
 

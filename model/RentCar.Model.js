@@ -6,9 +6,8 @@ const carRentSchema = mongoose.Schema({
         required:[true,'must be required']
     },
     picture: {
-        url: String,
-        secure_url: String,
-        public_id: String
+        type:Object,
+        required:[true,"picture is required"]
     },
     name:{
         type:String,
@@ -32,11 +31,16 @@ const carRentSchema = mongoose.Schema({
         type:String,
         required:[true,'Nid Must be required']
     },
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
+    },
     sits:{
         type:Number,
         required:[true,'required']
     }
-})
+}, { timestamps: true })
 
 const RentCarModel = mongoose.model('Rent_Car',carRentSchema);
 

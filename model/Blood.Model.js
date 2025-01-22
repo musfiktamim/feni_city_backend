@@ -6,9 +6,8 @@ const BloodSchema = mongoose.Schema({
         required: true,
     },
     picture: {
-        url: String,
-        secure_url: String,
-        public_id: String
+        type:Object,
+        required:[true,"picture must be required"]
     },
     donner_name: {
         type: String,
@@ -48,6 +47,11 @@ const BloodSchema = mongoose.Schema({
     },
     remark: {
         type: String,
+    },
+    true_false:{
+        type:Boolean,
+        enum:[true,false],
+        default:false
     },
     othersData: {
         type: Array
