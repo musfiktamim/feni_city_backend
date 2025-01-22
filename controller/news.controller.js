@@ -1,6 +1,6 @@
 class NewsController{
     static createNews =async (req,res) => {
-        console.log(req.body)
+        const {} = req.body
         console.log(req.user)
     }
 }
