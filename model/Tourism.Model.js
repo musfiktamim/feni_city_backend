@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const TourismSchema = mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required:true,
     },
     pictures: {

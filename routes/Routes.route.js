@@ -49,6 +49,6 @@ router.get("/get-worker",WorkerController.getWorker)
 
 // news
 router.post("/create-news",authentication,NewsController.createNews)
-
+router.get("/get-news",NewsController.getNewses)
 
 export default router

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ToletSchema = mongoose.Schema({
     userId:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
         required:[true,"user id is very very important"]
     },
     picture:[],

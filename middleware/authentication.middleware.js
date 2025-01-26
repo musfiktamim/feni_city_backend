@@ -5,22 +5,23 @@ import UserModel from "../model/User.Model.js"
 dotenv.config()
 
 async function authentication(req, res, next) {
-    // console.log(req)
     try {
-        const { authorization } = req.headers
-        if (authorization && authorization.startsWith("Bearer")) {
-            const token = authorization.split(" ")[1];
-            const { _id } = jwt.verify(token, process.env.SECRETE_KEY);
-            const findUser = await UserModel.findOne({ _id: _id }).select('-password');
-            if (findUser) {
+        // console.log(req.headers.authorization)
+        console.log(req)
+        const token = req.cookies.token || req.headers.authorization.toString().split(" ")[1]
+        if(token){
+            const {_id} = jwt.verify(token,process.env.SECRETE_KEY)
+            const findUser = await UserModel.findOne({_id:_id}).select('-password')
+            if(findUser){
                 req.user = findUser;
-                next();
-            } else {
-                return res.send({ "mission": false, "message": "user not founded" });
+                next()
+            }else{
+                return res.send({mission:false,message:"you have invalid token"})
             }
-        } else {
-            return res.send({ "mission": false, "message": "token not founded" });
+        }else{
+            return res.send({mission:false,message:"don't have token"})
         }
+        
     } catch (error) {
         return res.send({ "mission": false, "message": error.message });
     }

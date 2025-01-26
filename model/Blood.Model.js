@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const BloodSchema = mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required: true,
     },
     picture: {

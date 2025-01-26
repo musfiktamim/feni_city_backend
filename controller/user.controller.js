@@ -40,8 +40,9 @@ class User {
                                     const payload = {
                                         _id: saved._id
                                     }
-                                    const token1 = await jwt.sign(payload, process.env.SECRETE_KEY, { expiresIn: "30d" });
+                                    const token1 = await  jwt.sign(payload, process.env.SECRETE_KEY, { expiresIn: "30d" });
                                     const token = "Bearer " + token1
+                                    res.cookie('token',token)
                                     return res.send({ message: "saved successfully", mission: true, token: token })
                                 } else {
                                     return res.send({ message: "something went wrong", mission: false })

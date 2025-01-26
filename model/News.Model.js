@@ -2,18 +2,15 @@ import mongoose from "mongoose";
 
 const NewsSchema = mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required:true,
     },
-    pictures: {
+    titile:{
+        type:String,
+        required:true
+    },
+    allPera:{
         type:Array,
-    },
-    title: {
-        type: String,
-        required:true,
-    },
-    detailes: {
-        type: String,
         required:true,
     },
     true_false:{
